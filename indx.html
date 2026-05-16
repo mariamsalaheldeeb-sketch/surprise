@@ -1,0 +1,180 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise! ❤️</title>
+    <style>
+        body {
+            background-color: #3498db;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        /* تصميم الـ Labels */
+        .label-style {
+            color: #333;
+            font-size: 2.2rem;
+            background-color: #f0e6bd;
+            padding: 15px 30px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            display: none; /* كله مخفي في الأول ما عدا السؤال الرئيسي */
+        }
+        
+        #mainQuestion { display: block; } /* السؤال الأول يظهر علطول */
+
+        #yeeesss { background-color: #b39ddb; font-size: 3.5rem; font-weight: bold; }
+
+        /* حاويات الأزرار المرصوصة بانتظام */
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 60px;
+            width: 100%;
+            max-width: 600px;
+            display: none;
+        }
+        
+        #row1 { display: flex; } /* الصف الأول يظهر علطول */
+
+        button {
+            padding: 12px 35px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f5f5f5;
+            color: #000;
+            border-radius: 4px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        #noBtn { position: relative; }
+        
+        #backBtn { margin-top: 20px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="mainQuestion" class="label-style">will you marry me??</div>
+    <div id="iKnowIt" class="label-style">I Know It❤️❤️</div>
+    <div id="areYouSure" class="label-style">Are You Sure?? :)</div>
+    <div id="yeeesss" class="label-style">YAAAAAAYYYYYY 🥹❤️❤️❤️</div>
+    <div id="whyChooseYes" class="label-style">Then Why You Choose Yes?!!😒</div>
+    <div id="stopItMsg" class="label-style">STOP ITTT, JUST SAY YESSS</div>
+
+    <div class="btn-container" id="row1">
+        <button onclick="clickYes1()">Yes</button>
+        <button onclick="clickYes2()">YES</button>
+        <button id="noBtn" onmouseover="moveNoButton()">No</button>
+    </div>
+
+    <div class="btn-container" id="row2">
+        <button onclick="clickYesss()">YESSS</button>
+        <button onclick="clickNoooo()">NOOOO</button>
+    </div>
+
+    <div class="btn-container" id="row3">
+        <button onclick="clickFine()">Fine</button>
+        <button onmouseover="moveNoButtonAgain()">NO</button>
+    </div>
+
+    <button id="backBtn" onclick="clickBack()">Back</button>
+
+    <script>
+        let attemptCount = 0;
+
+        // إخفاء كل حاجة على الشاشة
+        function hideEverything() {
+            const labels = document.querySelectorAll('.label-style');
+            labels.forEach(l => l.style.display = 'none');
+            
+            const containers = document.querySelectorAll('.btn-container');
+            containers.forEach(c => c.style.display = 'none');
+            
+            document.getElementById('backBtn').style.display = 'none';
+        }
+
+        // 1. لو داس أول زرار (Yes)
+        function clickYes1() {
+            hideEverything();
+            document.getElementById('iKnowIt').style.display = 'block';
+        }
+
+        // 2. لو داس الزرار التاني (YES)
+        function clickYes2() {
+            hideEverything();
+            document.getElementById('areYouSure').style.display = 'block';
+            document.getElementById('row2').style.display = 'flex';
+        }
+
+        // 3. لو داس YESSS جوه ار يو شور
+        function clickYesss() {
+            hideEverything();
+            document.getElementById('yeeesss').style.display = 'block';
+            document.body.style.backgroundColor = '#b39ddb'; // تغيير الخلفية لروقان الـ YAY
+        }
+
+        // 4. لو داس NOOOO جوه ار يو شور
+        function clickNoooo() {
+            hideEverything();
+            document.getElementById('whyChooseYes').style.display = 'block';
+            document.getElementById('backBtn').style.display = 'block'; // ظهور باك في النص تحت
+        }
+
+        // 5. لما يدوس على Back
+        function clickBack() {
+            hideEverything();
+            // يظهر ار يو شور و زراير الـ YESSS والـ NOOOO (اللي هما صف 2)
+            document.getElementById('areYouSure').style.display = 'block';
+            document.getElementById('row2').style.display = 'flex';
+        }
+
+        // 6. تريكة الـ No الأولى (الـ 7 محاولات)
+        function moveNoButton() {
+            attemptCount++;
+            const noBtn = document.getElementById('noBtn');
+
+            if (attemptCount < 7) {
+                noBtn.style.position = 'fixed';
+                const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
+                const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
+                noBtn.style.left = x + 'px';
+                noBtn.style.top = y + 'px';
+            } else {
+                // بعد 7 مرات، يختفي كل القديم ويظهر التحذير وزرار Fine والـ NO التاني
+                hideEverything();
+                document.getElementById('stopItMsg').style.display = 'block';
+                document.getElementById('row3').style.display = 'flex';
+            }
+        }
+
+        // 7. لو داس Fine خلاص يستسلم ويروح للـ YESSS والـ NOOOO
+        function clickFine() {
+            hideEverything();
+            document.getElementById('areYouSure').style.display = 'block';
+            document.getElementById('row2').style.display = 'flex';
+        }
+
+        // 8. زيادة من عندي: لو فكر غلس ورايح لزرار الـ NO التاني اللي جنب Fine، يطير برضه وميمسكوش!
+        function moveNoButtonAgain(e) {
+            const btn = window.event.target;
+            btn.style.position = 'fixed';
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 40);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 40);
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+    </script>
+</body>
+</html>
